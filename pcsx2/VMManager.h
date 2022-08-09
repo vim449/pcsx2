@@ -43,6 +43,7 @@ struct VMBootParameters
 	std::string filename;
 	std::string elf_override;
 	std::string save_state;
+	std::string host_path;
 	std::optional<s32> state_index;
 	std::optional<CDVD_SourceType> source_type;
 

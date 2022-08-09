@@ -577,6 +577,11 @@ bool QtHost::ParseCommandLineOptions(int argc, char* argv[], std::shared_ptr<VMB
 				AutoBoot(autoboot)->elf_override = argv[++i];
 				continue;
 			}
+			else if (CHECK_ARG_PARAM("-hostFSPath"))
+			{
+				AutoBoot(autoboot)->host_path = argv[++i];
+				continue;
+			}
 			else if (CHECK_ARG_PARAM("-disc"))
 			{
 				AutoBoot(autoboot)->source_type = CDVD_SourceType::Disc;
@@ -727,7 +732,7 @@ int main(int argc, char* argv[])
 	// Skip the update check if we're booting a game directly.
 	if (autoboot)
 		g_emu_thread->startVM(std::move(autoboot));
-	else
+	else if (Host::GetBaseBoolSettingValue("AutoUpdater", "doUpdateCheck", true))
 		main_window->startupUpdateCheck();
 
 	// This doesn't return until we exit.

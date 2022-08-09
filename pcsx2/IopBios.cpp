@@ -68,8 +68,16 @@ static std::string hostRoot;
 
 void Hle_SetElfPath(const char* elfFileName)
 {
+	Console.Warning("HOST PATH");
+	Console.Warning(elfFileName);
 	DevCon.WriteLn("HLE Host: Will load ELF: %s\n", elfFileName);
 	hostRoot = Path::ToNativePath(Path::GetDirectory(elfFileName)) + FS_OSPATH_SEPARATOR_STR;
+	Console.WriteLn("HLE Host: Set 'host:' root path to: %s\n", hostRoot.c_str());
+}
+
+void Hle_SetHostPath(const char* hostFSPath)
+{
+	hostRoot = Path::ToNativePath(hostFSPath) + FS_OSPATH_SEPARATOR_STR;
 	Console.WriteLn("HLE Host: Set 'host:' root path to: %s\n", hostRoot.c_str());
 }
 

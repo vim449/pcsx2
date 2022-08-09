@@ -886,6 +886,15 @@ struct Pcsx2Config
 		}
 	};
 
+	struct OverrideElfOptions
+	{
+		std::string ElfOverridePath;
+		
+		OverrideElfOptions();
+		void LoadSave(SettingsWrapper& wrap);
+
+	};
+
 	// ------------------------------------------------------------------------
 	struct FramerateOptions
 	{
@@ -979,6 +988,7 @@ struct Pcsx2Config
 	GamefixOptions Gamefixes;
 	ProfilerOptions Profiler;
 	DebugOptions Debugger;
+	OverrideElfOptions OverrideElf;
 	FramerateOptions Framerate;
 	SPU2Options SPU2;
 	DEV9Options DEV9;
