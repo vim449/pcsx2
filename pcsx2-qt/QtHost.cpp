@@ -74,15 +74,16 @@ EmuThread* g_emu_thread = nullptr;
 //////////////////////////////////////////////////////////////////////////
 // Local function declarations
 //////////////////////////////////////////////////////////////////////////
-namespace QtHost {
-static void PrintCommandLineVersion();
-static void PrintCommandLineHelp(const std::string_view& progname);
-static std::shared_ptr<VMBootParameters>& AutoBoot(std::shared_ptr<VMBootParameters>& autoboot);
-static bool ParseCommandLineOptions(const QStringList& args, std::shared_ptr<VMBootParameters>& autoboot);
-static bool InitializeConfig();
-static void SaveSettings();
-static void HookSignals();
-}
+namespace QtHost
+{
+	static void PrintCommandLineVersion();
+	static void PrintCommandLineHelp(const std::string_view& progname);
+	static std::shared_ptr<VMBootParameters>& AutoBoot(std::shared_ptr<VMBootParameters>& autoboot);
+	static bool ParseCommandLineOptions(const QStringList& args, std::shared_ptr<VMBootParameters>& autoboot);
+	static bool InitializeConfig();
+	static void SaveSettings();
+	static void HookSignals();
+} // namespace QtHost
 
 //////////////////////////////////////////////////////////////////////////
 // Local variable declarations
@@ -461,7 +462,7 @@ void EmuThread::startBackgroundControllerPollTimer()
 
 	m_background_controller_polling_timer->start(FullscreenUI::IsInitialized() ?
 													 FULLSCREEN_UI_CONTROLLER_POLLING_INTERVAL :
-                                                     BACKGROUND_CONTROLLER_POLLING_INTERVAL);
+													 BACKGROUND_CONTROLLER_POLLING_INTERVAL);
 }
 
 void EmuThread::stopBackgroundControllerPollTimer()
@@ -1391,10 +1392,7 @@ QString QtHost::GetAppNameAndVersion()
 	else if constexpr (PCSX2_isReleaseVersion)
 	{
 #define APPNAME_STRINGIZE(x) #x
-		ret = QStringLiteral("PCSX2 "
-			APPNAME_STRINGIZE(PCSX2_VersionHi) "."
-			APPNAME_STRINGIZE(PCSX2_VersionMid) "."
-			APPNAME_STRINGIZE(PCSX2_VersionLo));
+		ret = QStringLiteral("PCSX2 " APPNAME_STRINGIZE(PCSX2_VersionHi) "." APPNAME_STRINGIZE(PCSX2_VersionMid) "." APPNAME_STRINGIZE(PCSX2_VersionLo));
 #undef APPNAME_STRINGIZE
 	}
 	else
@@ -1684,11 +1682,11 @@ bool QtHost::ParseCommandLineOptions(const QStringList& args, std::shared_ptr<VM
 				AutoBoot(autoboot)->elf_override = (++it)->toStdString();
 				continue;
 			}
-            else if (CHECK_ARG_PARAM("-hostFSPath"))
-            {
-                AutoBoot(autoboot)->host_path = argv[++i];
-                coninue;
-            }
+			else if (CHECK_ARG_PARAM("-hostFSPath"))
+			{
+				AutoBoot(autoboot)->host_path = (++it)->toStdString();
+				continue;
+			}
 			else if (CHECK_ARG_PARAM(QStringLiteral("-disc")))
 			{
 				AutoBoot(autoboot)->source_type = CDVD_SourceType::Disc;
@@ -1767,9 +1765,7 @@ bool QtHost::ParseCommandLineOptions(const QStringList& args, std::shared_ptr<VM
 	// scanning the game list).
 	if (s_batch_mode && !s_start_fullscreen_ui && !autoboot)
 	{
-		QMessageBox::critical(nullptr, QStringLiteral("Error"), s_nogui_mode ?
-			QStringLiteral("Cannot use no-gui mode, because no boot filename was specified.") :
-			QStringLiteral("Cannot use batch mode, because no boot filename was specified."));
+		QMessageBox::critical(nullptr, QStringLiteral("Error"), s_nogui_mode ? QStringLiteral("Cannot use no-gui mode, because no boot filename was specified.") : QStringLiteral("Cannot use batch mode, because no boot filename was specified."));
 		return false;
 	}
 
