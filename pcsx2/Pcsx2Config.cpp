@@ -994,6 +994,17 @@ void Pcsx2Config::DebugOptions::LoadSave(SettingsWrapper& wrap)
 	SettingsWrapBitfield(MemoryViewBytesPerRow);
 }
 
+Pcsx2Config::OverrideElfOptions::OverrideElfOptions()
+{
+	ElfOverridePath = "";
+}
+
+void Pcsx2Config::OverrideElfOptions::LoadSave(SettingsWrapper& wrap)
+{
+	SettingsWrapSection("EmuCore/OverrideElf");
+
+	SettingsWrapEntry(ElfOverridePath);
+}
 Pcsx2Config::FilenameOptions::FilenameOptions()
 {
 }
@@ -1140,6 +1151,7 @@ void Pcsx2Config::LoadSave(SettingsWrapper& wrap)
 	Profiler.LoadSave(wrap);
 
 	Debugger.LoadSave(wrap);
+    OverrideElf.LoadSave(wrap);
 	Trace.LoadSave(wrap);
 
 #ifdef ENABLE_ACHIEVEMENTS

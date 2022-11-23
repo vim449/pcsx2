@@ -1684,6 +1684,11 @@ bool QtHost::ParseCommandLineOptions(const QStringList& args, std::shared_ptr<VM
 				AutoBoot(autoboot)->elf_override = (++it)->toStdString();
 				continue;
 			}
+            else if (CHECK_ARG_PARAM("-hostFSPath"))
+            {
+                AutoBoot(autoboot)->host_path = argv[++i];
+                coninue;
+            }
 			else if (CHECK_ARG_PARAM(QStringLiteral("-disc")))
 			{
 				AutoBoot(autoboot)->source_type = CDVD_SourceType::Disc;

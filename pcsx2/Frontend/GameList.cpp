@@ -149,7 +149,19 @@ void GameList::FillBootParametersForEntry(VMBootParameters* params, const Entry*
 		params->filename = entry->path;
 		params->source_type = CDVD_SourceType::Iso;
 		params->elf_override.clear();
-	}
+
+        std::string crc_string == fmt::format("{:x}", entry->crc);
+        std::string host_path = Host::GetBaseStringSettingValue("HostPath", std::move(crc_string).c_str());
+		Console.Warning("FILL BOOT PARAMS");
+		Console.Warning(std::move(crc_string).c_str());
+		Console.Warning(host_path);
+        if (host_path.empty())
+        {
+            params->host_path.clear();
+        } else {
+			params->host_path = host_path;
+		}
+    }
 	else if (entry->type == GameList::EntryType::ELF)
 	{
 		params->filename.clear();

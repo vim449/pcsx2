@@ -832,7 +832,16 @@ bool VMManager::ApplyBootParameters(VMBootParameters params, std::string* state_
 		Hle_SetElfPath(s_elf_override.c_str());
 		EmuConfig.UseBOOT2Injection = true;
 	}
+    else if (!params.host_path.empty())
+	{
+		if (!FileSystem::DirectoryExists(params.host_path.c_str()))
+		{
+			Host::ReportErrorAsync("Error", fmt::format("Requested hostFS path '{}' does not exist.", params.host_path));
+			return false;
+		}
 
+		Hle_SetHostPath(params.host_path.c_str());
+	}
 	return true;
 }
 
