@@ -19,6 +19,7 @@ jobs:
       - name: Verify VS Project Files
         run: .github\workflows\scripts\windows\validate-vs-filters.ps1
 
+  build_qt_sse4:
     needs: lint_vs_proj_files
     name: "SSE4"
     uses: ./.github/workflows/windows_build_qt.yml
